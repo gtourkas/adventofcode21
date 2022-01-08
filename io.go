@@ -30,3 +30,26 @@ func readIntFile(pathToFile string) []int {
 
 	return lines
 }
+
+func readStringFile(pathToFile string) []string {
+	var file *os.File
+	var err error
+	file, err = os.Open(pathToFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	var lines []string
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
+	if err = scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	return lines
+}
